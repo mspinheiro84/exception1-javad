@@ -13,8 +13,7 @@ public class Program {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		LocalDate now = LocalDate.now();
-		
+				
 		System.out.print("Room number: ");
 		int number = sc.nextInt();
 		System.out.print("Check-in date (dd/MM/yyyy) "); 
@@ -35,16 +34,12 @@ public class Program {
 			System.out.print("Check-out date (dd/MM/yyyy) ");
 			LocalDate upCheckOut = LocalDate.parse(sc.next(), fmt);
 			
-			if (!upCheckOut.isAfter(upCheckIn)) {
-				System.out.println("Error in reservation: Check-Out date must be after check-in date");
+			String error = reservation.updateDates(upCheckIn, upCheckOut);
+			if (error != null) {
+				System.out.println("Error in reservation: " + error);
 			} else {
-				if (now.isAfter(upCheckOut) || now.isAfter(upCheckIn)) {
-					System.out.println("Reservation dates for update must be future dates");
-				} else {
-					reservation.updateDates(upCheckIn, upCheckOut);
-					System.out.println("Reservation: " + reservation);
-				}
-			}
+				System.out.println("Reservation: " + reservation);
+			} 
 		}
 		
 		
